@@ -15,10 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from frost_met_app.views import MainPage
+from frost_met_app.views import MainPage, NotFound
+from django.conf.urls import handler404
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', MainPage.as_view(template_name="index.html"), name="main_page"),
     path('index/', MainPage.as_view(template_name="index.html"), name="main_page"),
 ]
+
+handler404 = NotFound.page_not_found_view
