@@ -1,3 +1,4 @@
 /app/app/settings.py
-../__pycache__/
-./.idea/
+/app/app/__pycache__/
+/app/.idea/
+/app/frost_met_app/__pycache__/
