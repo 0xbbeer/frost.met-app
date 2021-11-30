@@ -1,1 +1,3 @@
 /app/app/settings.py
+../__pycache__/
+./.idea/
