@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from frost_met_app.views import MainPage, NotFound
-from django.conf.urls import handler404
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
