@@ -1,3 +1,4 @@
+![linter-test](https://github.com/0xbbeer/frost.met-app/actions/workflows/linter-test.yml/badge.svg)
 # frost.met-app
 EPAM Cloud and DevOps Internship. Final task.
 
