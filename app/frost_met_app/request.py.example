@@ -1,0 +1,51 @@
+import requests
+import psycopg2
+
+# DB Credentials
+conn_to_pg = psycopg2.connect(dbname='DBNAME', user='DBUSER', password='DBPASSWORD', host='DBHOST')
+
+client_id = 'API_ID'
+
+endpoint = 'https://frost.met.no/sources/v0.jsonld'
+parameters = {
+    'elements': 'wind_from_direction',
+    'country': 'Norge',
+}
+# Issue an HTTP GET request
+r = requests.get(endpoint, parameters, auth=(client_id, 'API_PASSWORD'))
+# Extract JSON data
+json = r.json()
+data = json['data']
+
+for station_info in data:
+    station_id = station_info['id']
+    country = station_info['country']
+    try:
+        station_geometry = station_info['geometry']
+        geometry = station_geometry['coordinates']
+    except:
+        geometry = 'None'
+    try:
+        municipality = station_info['municipality']
+    except:
+        municipality = "None"
+    stationHolders = station_info['stationHolders']
+    validFrom = station_info['validFrom']
+    stationHolders = "test"
+    cursor = conn_to_pg.cursor()
+    cursor.execute(
+        "insert into frost_met_app_stations("
+        "station_id,"
+        "country,"
+        "geometry,"
+        "municipality, stationHolder, validFrom) values ("
+        "'%s',"
+        "'%s',"
+        "'%s',"
+        "'%s',"
+        "'%s',"
+        "'%s');" % (
+            station_id, country, geometry,
+            municipality, stationHolders, validFrom))
+    conn_to_pg.commit()
+    cursor.close()
