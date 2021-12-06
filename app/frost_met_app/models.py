@@ -12,4 +12,3 @@ class Stations(models.Model):
     def __str__(self):
 
         return self.station_id
-
