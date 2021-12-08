@@ -62,3 +62,12 @@ class GetData(TemplateView):
                 messages.info(request, result)
 
             return HttpResponseRedirect("/index/")
+
+class AllStations(TemplateView):
+    template_name = 'all_stations.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = dict()
+        context["stations"] = Stations.objects.all().order_by(
+            'validfrom')
+        return context

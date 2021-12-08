@@ -11279,3 +11279,15 @@ footer.sticky-footer .copyright {
 body.sidebar-toggled footer.sticky-footer {
   width: 100%;
 }
+.dataButtons {
+  display: flex;
+  justify-content: center;
+}
+.marginDataButtons {
+  margin-left: 10px;
+}
+.dataCards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}

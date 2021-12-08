@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from frost_met_app.views import MainPage, NotFound, DeleteData, GetData
+from frost_met_app.views import MainPage, NotFound, DeleteData, GetData, AllStations
 
 
 urlpatterns = [
@@ -25,6 +25,7 @@ urlpatterns = [
          name="main_page"),
     path('delete_data', DeleteData.delete, name='delete_data'),
     path('get_data', GetData.get_data, name='get_data'),
+    path('all_stations/', AllStations.as_view(template_name="all_stations.html"), name="all_stations"),
 ]
 
 handler404 = NotFound.page_not_found_view

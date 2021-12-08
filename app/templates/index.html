@@ -5,25 +5,26 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-        <form action="{% url 'delete_data' %}" method="POST">
-                     <!-- Token -->
-                    {% csrf_token %}
-                    <input class="btn btn-warning" type="submit"  value="Delete data" >
-                    <!-- Action -->
-                    <input type="hidden" id="form_action" value="delete" name="delete">
-                </form>
+    </div>
+    <div class="dataButtons">
         <form action="{% url 'get_data' %}" method="POST">
-                     <!-- Token -->
-                    {% csrf_token %}
-                    <input class="btn btn-warning" type="submit"  value="Get Data" >
-                    <!-- Action -->
-                    <input type="hidden" id="form_action" value="get" name="get">
-                </form>
-        <a  class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" id="cmd"><i
-                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                         <!-- Token -->
+                        {% csrf_token %}
+                        <input class="btn btn-warning" type="submit"  value="Get Data" >
+                        <!-- Action -->
+                        <input type="hidden" id="form_action" value="get" name="get">
+        </form>
+
+        <form class="marginDataButtons" action="{% url 'delete_data' %}" method="POST">
+                         <!-- Token -->
+                        {% csrf_token %}
+                        <input class="btn btn-warning" type="submit"  value="Delete data" >
+                        <!-- Action -->
+                        <input type="hidden" id="form_action" value="delete" name="delete">
+        </form>
     </div>
     <h4>Top 10 stations with the oldest data:</h4>
-    <table id="dataTablde" class="table table-bordered dataTable" >
+    <table id="dataTableTopTen" class="table table-bordered dataTable" >
     <thead>
         <tr>
             <th>Station ID</th>
@@ -47,7 +48,27 @@
     {% endfor %}
     </tbody>
 </table>
+    <h4>Wind direction now:</h4>
+    <div class="dataCards">
+    {% for station in stations %}
 
+        <div class="col-xl-3 col-md-6 mb-4">
+                                    <div class="card border-left-primary shadow h-100 py-2">
+                                        <div class="card-body">
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col mr-2">
+                                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                        Wind Direction</div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+        </div>
+    {% endfor %}
+    </div>
 
-    </script>
 {% endblock %}
