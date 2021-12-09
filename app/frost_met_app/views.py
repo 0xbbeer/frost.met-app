@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 # from django.views.generic.base import View
 from django.views.generic import TemplateView
-from frost_met_app.models import Stations, MeasuringBegin
+from frost_met_app.models import Stations, MeasuringBegin, WindDirection
 from django.contrib import messages
 import os
 
@@ -16,6 +16,10 @@ class MainPage(TemplateView):
         context["stations"] = \
             MeasuringBegin.objects.select_related(
                 'station').all().order_by('start_date')[:10]
+        context["wind"] = \
+            WindDirection.objects.select_related(
+                'station').all()
+        context["wind"] = WindDirection.objects.all()
         return context
 
 

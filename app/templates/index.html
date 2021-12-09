@@ -40,7 +40,7 @@
         <tr>
             <td>{{ info.station.station_id }}</td>
             <td>{{ info.station.country }}</td>
-            <td><a href="https://www.openstreetmap.org/search?query= {{ info.station.w }}%2C {{ info.station.e }}">{{ info.station.geometry }}</a></td>
+            <td><a target="_blank" href="https://www.openstreetmap.org/search?query= {{ info.station.w }}%2C {{ info.station.e }}">{{ info.station.geometry }}</a></td>
             <td>{{ info.station.municipality }}</td>
             <td>{{ info.station.stationholder }}</td>
             <td data-order="{{ forloop.counter }}">{{ info.start_date }}</td>
@@ -50,19 +50,26 @@
 </table>
     <h4>Wind direction now:</h4>
     <div class="dataCards">
-    {% for station in stations %}
+    {% for wind_info in wind %}
 
         <div class="col-xl-3 col-md-6 mb-4">
                                     <div class="card border-left-primary shadow h-100 py-2">
                                         <div class="card-body">
                                             <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                        Wind Direction</div>
-                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                                                <div class="col mr-1">
+                                                    <div class="text-md-left font-weight-bold text-primary text-uppercase mb-1">
+                                                        {{ wind_info.station_id }}</div>
+                                                    <div class="text-md-left font-weight-bold text-gray-800">
+                                                        {{ wind_info.station.municipality}}</div>
+                                                </div>
+                                                <div class="col mr-1">
+                                                    <div class="text-md font-weight-bold text-gray-800">
+                                                        {{ wind_info.wind_direction }}°</div>
                                                 </div>
                                                 <div class="col-auto">
-                                                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                                    <img style="background: white; width: 40px; rotate:
+                                                            {{ wind_info.wind_direction }}deg "
+                                                         src="{% static 'img/arrow.png' %}">
                                                 </div>
                                             </div>
                                         </div>
