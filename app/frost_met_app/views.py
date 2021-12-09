@@ -3,17 +3,19 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 # from django.views.generic.base import View
 from django.views.generic import TemplateView
-from frost_met_app.models import Stations
+from frost_met_app.models import Stations, MeasuringBegin
 from django.contrib import messages
 import os
+
 
 class MainPage(TemplateView):
     template_name = 'index.html'
 
     def get_context_data(self, *args, **kwargs):
         context = dict()
-        context["stations"] = Stations.objects.all().order_by(
-            'validfrom')[:10]
+        context["stations"] = \
+            MeasuringBegin.objects.select_related(
+                'station').all().order_by('start_date')[:10]
         return context
 
 
@@ -40,7 +42,6 @@ class DeleteData(TemplateView):
                 result = "Failed"
                 messages.info(request, result)
 
-
             return HttpResponseRedirect("/index/")
 
 
@@ -62,6 +63,7 @@ class GetData(TemplateView):
                 messages.info(request, result)
 
             return HttpResponseRedirect("/index/")
+
 
 class AllStations(TemplateView):
     template_name = 'all_stations.html'

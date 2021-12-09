@@ -23,7 +23,7 @@
                         <input type="hidden" id="form_action" value="delete" name="delete">
         </form>
     </div>
-    <h4>Top 10 stations with the oldest data:</h4>
+    <h4>Top 10 stations with the oldest data of wind-direction measuring beginning:</h4>
     <table id="dataTableTopTen" class="table table-bordered dataTable" >
     <thead>
         <tr>
@@ -32,18 +32,18 @@
             <th>Coordinates</th>
             <th>Municipality</th>
             <th>Stationholder</th>
-            <th>Validfrom</th>
+            <th>Measure begining date</th>
         </tr>
     </thead>
     <tbody>
-    {% for station in stations %}
+    {% for info in stations %}
         <tr>
-            <td>{{ station.station_id }}</td>
-            <td>{{ station.country }}</td>
-            <td>{{ station.geometry }}</td>
-            <td>{{ station.municipality }}</td>
-            <td>{{ station.stationholder }}</td>
-            <td data-order="{{ forloop.counter }}">{{ station.validfrom }}</td>
+            <td>{{ info.station.station_id }}</td>
+            <td>{{ info.station.country }}</td>
+            <td><a href="https://www.openstreetmap.org/search?query= {{ info.station.w }}%2C {{ info.station.e }}">{{ info.station.geometry }}</a></td>
+            <td>{{ info.station.municipality }}</td>
+            <td>{{ info.station.stationholder }}</td>
+            <td data-order="{{ forloop.counter }}">{{ info.start_date }}</td>
         </tr>
     {% endfor %}
     </tbody>
