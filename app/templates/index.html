@@ -8,74 +8,92 @@
     </div>
     <div class="dataButtons">
         <form action="{% url 'get_data' %}" method="POST">
-                         <!-- Token -->
-                        {% csrf_token %}
-                        <input class="btn btn-warning" type="submit"  value="Get Data" >
-                        <!-- Action -->
-                        <input type="hidden" id="form_action" value="get" name="get">
+            <!-- Token -->
+            {% csrf_token %}
+            <input class="btn btn-info" type="submit" value="Get Data">
+            <!-- Action -->
+            <input type="hidden" id="form_action" value="get" name="get">
         </form>
 
         <form class="marginDataButtons" action="{% url 'delete_data' %}" method="POST">
-                         <!-- Token -->
-                        {% csrf_token %}
-                        <input class="btn btn-warning" type="submit"  value="Delete data" >
-                        <!-- Action -->
-                        <input type="hidden" id="form_action" value="delete" name="delete">
+            <!-- Token -->
+            {% csrf_token %}
+            <input class="btn btn-danger" type="submit" value="Delete data">
+            <!-- Action -->
+            <input type="hidden" id="form_action" value="delete" name="delete">
+        </form>
+
+        <form class="marginDataButtons" action="{% url 'get_wind_direction' %}" method="POST">
+            <!-- Token -->
+            {% csrf_token %}
+            <input class="btn btn-warning" type="submit" value="Get Wind Direction">
+            <!-- Action -->
+            <input type="hidden" id="form_action" value="wind_direction" name="wind_direction">
         </form>
     </div>
     <h4>Top 10 stations with the oldest data of wind-direction measuring beginning:</h4>
-    <table id="dataTableTopTen" class="table table-bordered dataTable" >
-    <thead>
+    <table id="dataTableTopTen" class="table table-bordered dataTable">
+        <thead>
         <tr>
             <th>Station ID</th>
             <th>Country</th>
             <th>Coordinates</th>
             <th>Municipality</th>
-            <th>Stationholder</th>
-            <th>Measure begining date</th>
+            <th>Station holder</th>
+            <th>Measure beginning date</th>
         </tr>
-    </thead>
-    <tbody>
-    {% for info in stations %}
-        <tr>
-            <td>{{ info.station.station_id }}</td>
-            <td>{{ info.station.country }}</td>
-            <td><a target="_blank" href="https://www.openstreetmap.org/search?query= {{ info.station.w }}%2C {{ info.station.e }}">{{ info.station.geometry }}</a></td>
-            <td>{{ info.station.municipality }}</td>
-            <td>{{ info.station.stationholder }}</td>
-            <td data-order="{{ forloop.counter }}">{{ info.start_date }}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        {% for info in stations %}
+            <tr>
+                <td>{{ info.station.station_id }}</td>
+                <td>{{ info.station.country }}</td>
+                <td><a target="_blank"
+                       href="https://www.openstreetmap.org/search?query= {{ info.station.w }}%2C {{ info.station.n }}">
+                    {{ info.station.geometry }}</a>
+                </td>
+                <td>{{ info.station.municipality }}</td>
+                <td>{{ info.station.stationholder }}</td>
+                <td data-order="{{ forloop.counter }}">{{ info.start_date }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
     <h4>Wind direction now:</h4>
     <div class="dataCards">
-    {% for wind_info in wind %}
+        {% for wind_info in wind %}
 
-        <div class="col-xl-3 col-md-6 mb-4">
-                                    <div class="card border-left-primary shadow h-100 py-2">
-                                        <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-1">
-                                                    <div class="text-md-left font-weight-bold text-primary text-uppercase mb-1">
-                                                        {{ wind_info.station_id }}</div>
-                                                    <div class="text-md-left font-weight-bold text-gray-800">
-                                                        {{ wind_info.station.municipality}}</div>
-                                                </div>
-                                                <div class="col mr-1">
-                                                    <div class="text-md font-weight-bold text-gray-800">
-                                                        {{ wind_info.wind_direction }}°</div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <img style="background: white; width: 40px; rotate:
-                                                            {{ wind_info.wind_direction }}deg "
-                                                         src="{% static 'img/arrow.png' %}">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-        </div>
-    {% endfor %}
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card
+                {% if wind_info.wind_direction == "NO DATA" %}
+                    border-left-danger
+                {% else %}
+                        border-left-primary
+                {% endif %}
+                shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-1">
+                                <div class="text-md-left font-weight-bold text-primary text-uppercase mb-1">
+                                    {{ wind_info.station_id }}</div>
+                                <div class="text-md-left font-weight-bold text-gray-800">
+                                    {{ wind_info.station.municipality }}</div>
+                            </div>
+                            <div class="col mr-1">
+                                <div class="text-md font-weight-bold text-gray-800">
+                                    {{ wind_info.wind_direction }}°
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <img style="background: white; width: 40px; rotate:
+                                        {{ wind_info.wind_direction }}deg "
+                                     src="{% static 'img/arrow.png' %}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
     </div>
 
 {% endblock %}

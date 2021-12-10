@@ -2,9 +2,9 @@
 /app/app/__pycache__/
 /app/.idea/
 /app/frost_met_app/__pycache__/
-/app/frost_met_app/request.py
+/app/frost_met_app/get_stations.py
 app/__pycache__/
 /app/frost_met_app/migrations/
 .idea/
-app/frost_met_app/measuring_begin.py
+app/frost_met_app/get_measuring_begin.py
 app/frost_met_app/get_wind_direction.py

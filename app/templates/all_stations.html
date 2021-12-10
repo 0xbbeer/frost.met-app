@@ -7,30 +7,32 @@
         <h1 class="h3 mb-0 text-gray-800">All Stations</h1>
     </div>
     <h4>Information about all Norway meteostation's which measures wind from direction.</h4>
-    <table id="dataTable" class="table table-bordered dataTable" >
-    <thead>
+    <table id="dataTable" class="table table-bordered dataTable">
+        <thead>
         <tr>
             <th>Station ID</th>
             <th>Country</th>
             <th>Coordinates</th>
             <th>Municipality</th>
-            <th>Stationholder</th>
-            <th>Validfrom</th>
+            <th>Station holder</th>
+            <th>Valid from</th>
         </tr>
-    </thead>
-    <tbody>
-    {% for station in stations %}
-        <tr>
-            <td>{{ station.station_id }}</td>
-            <td>{{ station.country }}</td>
-            <td>{{ station.geometry }}</td>
-            <td>{{ station.municipality }}</td>
-            <td>{{ station.stationholder }}</td>
-            <td data-order="{{ forloop.counter }}">{{ station.validfrom }}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        {% for station in stations %}
+            <tr>
+                <td>{{ station.station_id }}</td>
+                <td>{{ station.country }}</td>
+                <td><a target="_blank"
+                       href="https://www.openstreetmap.org/search?query= {{ station.w }}%2C {{ station.n }}">
+                    {{ station.geometry }}</a></td>
+                <td>{{ station.municipality }}</td>
+                <td>{{ station.stationholder }}</td>
+                <td data-order="{{ forloop.counter }}">{{ station.validfrom }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
 
     </script>

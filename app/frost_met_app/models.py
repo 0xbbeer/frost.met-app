@@ -5,14 +5,21 @@ from django.db import models
 #
 # Get from 'https://frost.met.no/sources/v0.jsonld'
 class Stations(models.Model):
-    station_id = models.CharField(default="", max_length=512, blank=True, primary_key=True, unique=True)
+    station_id = models.CharField(
+        default="",
+        max_length=512,
+        blank=True,
+        primary_key=True,
+        unique=True)
     country = models.CharField(default="", max_length=512, blank=True)
     geometry = models.CharField(default="", max_length=512, blank=True)
     municipality = models.CharField(default="", max_length=512, blank=True)
     stationholder = models.CharField(default="-", max_length=512, blank=True)
     validfrom = models.DateTimeField(default="", blank=True)
+    # longitude
     w = models.CharField(default="", max_length=512, blank=True)
-    e = models.CharField(default="", max_length=512, blank=True)
+    # latitude
+    n = models.CharField(default="", max_length=512, blank=True)
 
     def __str__(self):
         return self.station_id
@@ -22,7 +29,10 @@ class Stations(models.Model):
 #
 # Get from 'https://frost.met.no/observations/availableTimeSeries/v0.jsonld'
 class MeasuringBegin(models.Model):
-    station = models.ForeignKey('Stations', to_field='station_id', blank=True, null=True,
+    station = models.ForeignKey('Stations',
+                                to_field='station_id',
+                                blank=True,
+                                null=True,
                                 on_delete=models.CASCADE)
     start_date = models.DateTimeField(default="", blank=True)
 
@@ -34,9 +44,14 @@ class MeasuringBegin(models.Model):
 #
 # Get from 'https://frost.met.no/observations/v0.jsonld'
 class WindDirection(models.Model):
-    station = models.ForeignKey('Stations', to_field='station_id', blank=True, null=True,
+    station = models.ForeignKey('Stations', to_field='station_id',
+                                blank=True,
+                                null=True,
                                 on_delete=models.CASCADE)
-    wind_direction = models.CharField(default="NO DATA", max_length=512, blank=True, null=True)
+    wind_direction = models.CharField(default="NO DATA",
+                                      max_length=512,
+                                      blank=True,
+                                      null=True)
 
     def __str__(self):
         return self.station_id
