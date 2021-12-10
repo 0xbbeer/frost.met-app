@@ -45,7 +45,7 @@ for station in stations:
                 observations = wind_info['observations']
                 observations = observations[0]
                 wind_from_direction = observations['value']
-            except:
+            except Exception:
                 wind_from_direction = 'NO DATA'
 
             cursor = conn_to_pg.cursor()
@@ -56,5 +56,5 @@ for station in stations:
             conn_to_pg.commit()
             cursor.close()
 
-    except:
+    except Exception:
         continue
