@@ -1,15 +1,16 @@
 import requests
 import psycopg2
+import os
 
 conn_to_pg = psycopg2.connect(
-    dbname='[FROST_DB_NAME]',
-    user='[FROST_DB_USER]',
-    password='[FROST_DB_PASSWORD]',
-    host='[FROST_DB_HOST]')
+    dbname=os.environ.get('POSTGRES_DB', None),
+    user=os.environ.get('POSTGRES_USER', None),
+    password=os.environ.get('POSTGRES_PASSWORD', None),
+    host=os.environ.get('POSTGRES_HOST', None))
 
 # ID for connect to frost.met API
-client_id = '[FROST_API_ID]'
-
+client_id = os.environ.get('FROST_API_ID', None)
+client_password = os.environ.get('FROST_API_PASSWORD', None)
 endpoint = 'https://frost.met.no/observations/availableTimeSeries/v0.jsonld'
 parameters = {
     'elements': 'wind_from_direction',
@@ -21,7 +22,7 @@ r = requests.get(
     parameters,
     auth=(
         client_id,
-        '[FROST_API_PASSWORD]'))
+        client_password))
 # Extract JSON data
 json = r.json()
 data = json['data']
@@ -44,7 +45,7 @@ for station_info in data:
                 station_id, validFrom))
         conn_to_pg.commit()
         cursor.close()
-    except Exception:
+    except:
         continue
 
 # 10 Oldest stations
@@ -68,3 +69,5 @@ for station in stations:
             station,))
     conn_to_pg.commit()
     cursor.close()
+
+

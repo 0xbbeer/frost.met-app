@@ -4,13 +4,13 @@ import os
 
 
 conn_to_pg = psycopg2.connect(
-    dbname='[FROST_DB_NAME]',
-    user='[FROST_DB_USER]',
-    password='[FROST_DB_PASSWORD]',
-    host='[FROST_DB_HOST]')
+    dbname=os.environ.get('POSTGRES_DB', None),
+    user=os.environ.get('POSTGRES_USER', None),
+    password=os.environ.get('POSTGRES_PASSWORD', None),
+    host=os.environ.get('POSTGRES_HOST', None))
 
-client_id = '[FROST_API_ID]'
-
+client_id = '38fe8d60-e312-4086-88fd-3201742d387d'
+client_password = os.environ.get('FROST_API_PASSWORD', None)
 endpoint = 'https://frost.met.no/sources/v0.jsonld'
 parameters = {
     'elements': 'wind_from_direction',
@@ -22,7 +22,7 @@ r = requests.get(
     parameters,
     auth=(
         client_id,
-        '[FROST_API_PASSWORD]'))
+        client_password))
 # Extract JSON data
 json = r.json()
 data = json['data']
@@ -40,18 +40,18 @@ for station_info in data:
         W = geometry[1]
         # latitude
         N = geometry[0]
-    except Exception:
+    except:
         geometry = 'None'
 
     try:
         municipality = station_info['municipality']
-    except Exception:
+    except:
         municipality = "None"
 
     stationHolders = station_info['stationHolders']
     try:
         stationHolders = stationHolders[0]
-    except Exception:
+    except:
         stationHolders = "None"
 
     validFrom = station_info['validFrom']

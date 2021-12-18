@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
-
+import psycopg2
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '[FROST_SEC_KEY]'
+SECRET_KEY = os.environ.get('APP_SECRET_KEY', None)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -56,7 +56,8 @@ ROOT_URLCONF = 'app.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [BASE_DIR / 'templates']
+        ,
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -78,11 +79,11 @@ WSGI_APPLICATION = 'app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': '[FROST_DB_NAME]',
-        'USER': '[FROST_DB_USER]',
-        'PASSWORD': '[FROST_DB_PASSWORD]',
-        'HOST': '[FROST_DB_HOST]',
-        'PORT': '[FROST_DB_PORT]'
+        'NAME': os.environ.get('POSTGRES_DB', None),
+        'USER': os.environ.get('POSTGRES_USER', None),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', None),
+        'HOST': os.environ.get('POSTGRES_HOST', None),
+        'PORT': os.environ.get('POSTGRES_PORT', None)
     }
 }
 

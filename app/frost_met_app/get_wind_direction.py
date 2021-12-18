@@ -1,16 +1,18 @@
 import requests
 import psycopg2
+import os
+
 
 # DB Credentials
 conn_to_pg = psycopg2.connect(
-    dbname='[FROST_DB_NAME]',
-    user='[FROST_DB_USER]',
-    password='[FROST_DB_PASSWORD]',
-    host='[FROST_DB_HOST]')
+    dbname=os.environ.get('POSTGRES_DB', None),
+    user=os.environ.get('POSTGRES_USER', None),
+    password=os.environ.get('POSTGRES_PASSWORD', None),
+    host=os.environ.get('POSTGRES_HOST', None))
 
 # ID for connect to frost.met API
-client_id = '[FROST_API_ID]'
-
+client_id = '38fe8d60-e312-4086-88fd-3201742d387d'
+client_password = os.environ.get('FROST_API_PASSWORD', None)
 cursor = conn_to_pg.cursor()
 cursor.execute(
     "select station_id from frost_met_app_winddirection")
@@ -32,7 +34,7 @@ for station in stations:
         endpoint,
         parameters,
         auth=(
-            client_id, '[FROST_API_PASSWORD]'))
+            client_id, client_password))
     # Extract JSON data
     json = r.json()
 
@@ -45,7 +47,7 @@ for station in stations:
                 observations = wind_info['observations']
                 observations = observations[0]
                 wind_from_direction = observations['value']
-            except Exception:
+            except:
                 wind_from_direction = 'NO DATA'
 
             cursor = conn_to_pg.cursor()
@@ -56,5 +58,5 @@ for station in stations:
             conn_to_pg.commit()
             cursor.close()
 
-    except Exception:
+    except:
         continue
