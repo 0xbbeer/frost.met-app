@@ -45,7 +45,7 @@ for station_info in data:
                 station_id, validFrom))
         conn_to_pg.commit()
         cursor.close()
-    except:
+    except Exception:
         continue
 
 # 10 Oldest stations
@@ -69,5 +69,3 @@ for station in stations:
             station,))
     conn_to_pg.commit()
     cursor.close()
-
-

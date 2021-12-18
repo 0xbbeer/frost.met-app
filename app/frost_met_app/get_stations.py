@@ -40,18 +40,18 @@ for station_info in data:
         W = geometry[1]
         # latitude
         N = geometry[0]
-    except:
+    except Exception:
         geometry = 'None'
 
     try:
         municipality = station_info['municipality']
-    except:
+    except Exception:
         municipality = "None"
 
     stationHolders = station_info['stationHolders']
     try:
         stationHolders = stationHolders[0]
-    except:
+    except Exception:
         stationHolders = "None"
 
     validFrom = station_info['validFrom']
