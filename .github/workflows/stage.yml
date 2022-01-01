@@ -43,6 +43,10 @@ jobs:
           echo $APP_SECRET_KEY >> .env
           echo $FROST_API_ID >> .env
           echo $FROST_API_PASSWORD >> .env
+      - name: ls
+        run: ls
+      - name: cat 
+        run: cat .env
       - name: docker-compose build
         run: docker-compose build 
       - name: Sleep
