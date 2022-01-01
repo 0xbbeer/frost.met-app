@@ -1,9 +1,7 @@
-from django.contrib.messages.api import MessageFailure
 from django.test import TestCase
 from django.test import Client
 from http import HTTPStatus
-
-from frost_met_app.models import MeasuringBegin, Stations, WindDirection
+from frost_met_app.models import Stations
 
 
 class SmokeTestCase(TestCase):
@@ -31,15 +29,13 @@ class UnitTestCase(TestCase):
         data = {
             'get': 'get',
         }
-       
-        response = self.c.post('/get_data', data)
 
-        try: 
+        self.c.post('/get_data', data)
+
+        try:
             station = Stations.objects.get(station_id='SN67650')
-            
+
         except Stations.DoesNotExist:
             station = 'NULL'
-            
-        self.assertIsInstance(station, Stations)
 
- 
+        self.assertIsInstance(station, Stations)

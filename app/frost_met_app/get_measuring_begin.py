@@ -7,7 +7,8 @@ def get_begin(self):
     # ID for connect to frost.met API
     client_id = os.environ.get('FROST_API_ID', None)
     client_password = os.environ.get('FROST_API_PASSWORD', None)
-    endpoint = 'https://frost.met.no/observations/availableTimeSeries/v0.jsonld'
+    endpoint = \
+        'https://frost.met.no/observations/availableTimeSeries/v0.jsonld'
     parameters = {
         'elements': 'wind_from_direction',
     }

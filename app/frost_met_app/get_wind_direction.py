@@ -47,6 +47,5 @@ def wind_direction(self):
 
                 s.save(update_fields=["wind_direction"])
 
-
         except Exception:
             continue

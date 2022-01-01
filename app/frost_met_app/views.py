@@ -3,7 +3,6 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from frost_met_app.models import Stations, MeasuringBegin, WindDirection
 from django.contrib import messages
-import os
 from frost_met_app import get_stations
 from frost_met_app import get_wind_direction
 
