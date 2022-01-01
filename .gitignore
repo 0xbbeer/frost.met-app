@@ -4,3 +4,4 @@
 app/__pycache__/
 /app/frost_met_app/migrations/
 .idea/
+.env

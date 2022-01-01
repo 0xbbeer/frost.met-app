@@ -4,6 +4,8 @@ from django.views.generic import TemplateView
 from frost_met_app.models import Stations, MeasuringBegin, WindDirection
 from django.contrib import messages
 import os
+from frost_met_app import get_stations
+from frost_met_app import get_wind_direction
 
 
 class MainPage(TemplateView):
@@ -72,7 +74,7 @@ class GetData(TemplateView):
 
                 Stations.objects.all().delete()
 
-                os.system('python3.9 frost_met_app/get_stations.py')
+                get_stations.get_stations('GET')
 
                 messages.info(request, result)
 
@@ -111,7 +113,7 @@ class GetWindDirection(TemplateView):
 
                 result = "Success"
 
-                os.system('python3.9 frost_met_app/get_wind_direction.py')
+                get_wind_direction.wind_direction('GET')
 
                 messages.info(request, result)
 
