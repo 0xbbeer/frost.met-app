@@ -18,6 +18,21 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    
+    - name: SonarCloud Quality Gate notification
+      if: always()
+      uses: adamkdean/simple-slack-notify@master
+      with:
+        channel: '#github_notifications'
+        status: ${{ job.status }}
+        success_text: 'SonarCloud Quality Gate (#${env.GITHUB_RUN_NUMBER}) completed successfully'
+        failure_text: 'SonarCloud Quality Gate (#${env.GITHUB_RUN_NUMBER}) failed'
+        cancelled_text: 'SonarCloud Quality Gate (#${env.GITHUB_RUN_NUMBER}) was cancelled'
+        fields: |
+          [{ "title": "Action URL", "value": "${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}/actions/runs/${env.GITHUB_RUN_ID}"}]
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   build_and_test:
     needs: sonarcloud
@@ -51,3 +66,17 @@ jobs:
         run: docker-compose up -d
       - name: run smoke and unit test
         run: docker-compose run --rm app python manage.py test
+      - name: build_and_test Gate notification
+        if: always()
+        uses: adamkdean/simple-slack-notify@master
+        with:
+          channel: '#github_notifications'
+          status: ${{ job.status }}
+          success_text: 'build_and_test (#${env.GITHUB_RUN_NUMBER}) completed successfully'
+          failure_text: 'build_and_test (#${env.GITHUB_RUN_NUMBER}) failed'
+          cancelled_text: 'build_and_test (#${env.GITHUB_RUN_NUMBER}) was cancelled'
+          fields: |
+            [{ "title": "Action URL", "value": "${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}/actions/runs/${env.GITHUB_RUN_ID}"}]
+          env:
+            SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
