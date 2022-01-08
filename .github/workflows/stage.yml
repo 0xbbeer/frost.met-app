@@ -4,7 +4,9 @@ on:
       - master
       - stage
     types: [assigned, opened, synchronize, reopened]
-
+  env:
+    SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 name: STAGE CI
 jobs:
   sonarcloud:
@@ -30,9 +32,6 @@ jobs:
         cancelled_text: 'SonarCloud Quality Gate (#${env.GITHUB_RUN_NUMBER}) was cancelled'
         fields: |
           [{ "title": "Action URL", "value": "${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}/actions/runs/${env.GITHUB_RUN_ID}"}]
-      env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   build_and_test:
     needs: sonarcloud
@@ -77,6 +76,3 @@ jobs:
           cancelled_text: 'build_and_test (#${env.GITHUB_RUN_NUMBER}) was cancelled'
           fields: |
             [{ "title": "Action URL", "value": "${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}/actions/runs/${env.GITHUB_RUN_ID}"}]
-          env:
-            SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
