@@ -23,7 +23,7 @@ jobs:
     
     - name: SonarCloud Quality Gate notification
       if: always()
-      uses: adamkdean/simple-slack-notify@master
+      uses: adamkdean/simple-slack-notify@1.0.4
       with:
         channel: '#github_notifications'
         status: ${{ job.status }}
@@ -67,7 +67,7 @@ jobs:
         run: docker-compose run --rm app python manage.py test
       - name: build_and_test Gate notification
         if: always()
-        uses: adamkdean/simple-slack-notify@master
+        uses: adamkdean/simple-slack-notify@1.0.4
         with:
           channel: '#github_notifications'
           status: ${{ job.status }}
