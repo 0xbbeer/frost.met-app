@@ -97,5 +97,8 @@ jobs:
           docker-compose up -d
 
       - name: Run moke and unit test
-        run: docker-compose run --rm app python manage.py test
+        run: |
+          docker-compose up -d
+          docker ps
+          docker-compose run --rm app python manage.py test
       
