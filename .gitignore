@@ -1,1 +1,7 @@
-/app/app/settings.py
+/app/app/__pycache__/
+/app/.idea/
+/app/frost_met_app/__pycache__/
+app/__pycache__/
+/app/frost_met_app/migrations/
+.idea/
+.env
