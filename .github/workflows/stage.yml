@@ -48,6 +48,12 @@ jobs:
           echo "FROST_API_PASSWORD='$FROST_API_PASSWORD'" >> .env
       - name: docker-compose build
         run: docker-compose build 
+        with:
+          registry: ghcr.io
+          username: "0xbbeer"
+          password: ${{ secrets.GITHUB_TOKEN }}
+          repository: 0xbbeer/sample-app
+          tags: latest
       - name: Sleep
         run: sleep 10
       - name: docker-compose up
