@@ -10,8 +10,7 @@ services:
     ports:
       - "5432:5432"
   app:
-    build:
-      context: .
+    image: ghcr.io/0xbbeer/sample-app:latest
     ports:
       - "3003:3003"
     command: >
