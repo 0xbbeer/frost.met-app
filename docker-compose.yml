@@ -10,7 +10,7 @@ services:
     ports:
       - "5432:5432"
   app:
-    image: ghcr.io/0xbbeer/sample-app:latest
+    image: ghcr.io/0xbbeer/sample-app:stage
     ports:
       - "3003:3003"
     command: >
